@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Code Converter</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: lightgreen;
+            padding: 50px;
+        }
+        .input-code, .output-code {
+            min-height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Input</h4>
+                <label for="input-language">Select Input Language</label>
+                <select id="input-language" class="browser-default form-control">
+                    {% for language in languages %}
+                        <option value="{{ language }}">{{ language }}</option>
+                    {% endfor %}
+                </select>
+                <textarea id="input-code" class="form-control input-code" rows="10"></textarea>
+            </div>
+            <div class="col-md-6">
+                <h4>Output</h4>
+                <label for="output-language">Select Output Language</label>
+                <select id="output-language" class="browser-default form-control">
+                    {% for language in languages %}
+                        <option value="{{ language }}">{{ language }}</option>
+                    {% endfor %}
+                </select>
+                <textarea id="output-code" class="form-control output-code" rows="10" readonly></textarea>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-primary" onclick="convertCode()">Convert</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function convertCode() {
+            let inputLanguage = document.getElementById('input-language').value;
+            let outputLanguage = document.getElementById('output-language').value;
+            let inputCode = document.getElementById('input-code').value;
+
+            fetch('/convert', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `input-language=${inputLanguage}&output-language=${outputLanguage}&input-code=${encodeURIComponent(inputCode)}`
+            })
+            .then(response => response.text())
+            .then(outputCode => {
+                document.getElementById('output-code').value = outputCode;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
