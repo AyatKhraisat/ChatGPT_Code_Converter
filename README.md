@@ -1,4 +1,4 @@
-# chatGPT Code Converter 
+# ChatGPT Code Converter 
 
 This project was built by chatGPT to convert the code programming language using chatGPT itself.
 what I have  only created needed prompts and some prompt engineering, tested the code and made ChatGPT correct itself if the code did not work. after that, I made ChatGPT create a new prompt based on its "understanding", I have added the prompts I provided for ChatGPT and the prompt created by ChatGPT in the prompt.md file.
